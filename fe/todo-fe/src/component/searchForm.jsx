@@ -6,6 +6,7 @@ const SearchForm = ({
     onSearchSubmit,
 }) => (
     <form onSubmit={onSearchSubmit}>
+        <h2>Search</h2>
         <InputWithLabel
             id="search"
             value={searchTerm}

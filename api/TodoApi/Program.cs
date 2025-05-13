@@ -1,17 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
 
+var AllowAllOrigins = "AllowAllOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:5173",
-                                "http://www.contoso.com");
-        });
+    // options.AddDefaultPolicy(
+    //     policy =>
+    //     {
+    //         policy.WithOrigins("http://localhost:5173",
+    //                            "https://localhost:5173",
+    //                            "http://www.contoso.com");
+    //     });
+
+    options.AddPolicy(AllowAllOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin();
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                    });
 });
 
 builder.Services.AddControllers();
@@ -34,7 +45,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseCors(AllowAllOrigins);
 
 app.UseAuthorization();
 

@@ -12,3 +12,13 @@ export const fetchListByName = (name) => axios.get(`${API_ENDPOINT}/filter/${nam
 // }
 
 //export { fetchList };
+
+export const saveToDoItem = (toDoDTO) =>
+    axios.post(API_ENDPOINT,
+        toDoDTO
+        // , {
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // }
+    );
