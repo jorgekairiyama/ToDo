@@ -1,17 +1,14 @@
+import axios from 'axios';
 
 const API_ENDPOINT = 'https://localhost:7034/api/TodoItems';
 
 //export async function fetchList()
-const fetchList = async () => fetch(`${API_ENDPOINT}`);
+export const fetchList = async () => axios.get(`${API_ENDPOINT}`);
+
+export const fetchListByName = (name) => axios.get(`${API_ENDPOINT}/filter/${name}`);
+// export function fetchListByName(name)
 // {
-// const result = await fetch(`${API_ENDPOINT}`);
-// if (!result.ok)
-// {
-//     throw new Error(`Response status: ${response.status}`);
+//     return axios.get(`${API_ENDPOINT}/filter/${name}`);
 // }
 
-// const json = await response.json();
-// return json;
-// }
-
-export { fetchList };
+//export { fetchList };

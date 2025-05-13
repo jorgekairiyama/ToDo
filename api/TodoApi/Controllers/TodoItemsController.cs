@@ -43,7 +43,20 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
 
-            return ItemToDTO(todoItem);
+            return Ok(ItemToDTO(todoItem));
+        }
+
+        [HttpGet("filter/{name}")]
+        public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems(string name)
+        {
+            Console.WriteLine(@$"GetTodoItems {name} {System.DateTime.Now}");
+            var todoItems = await _context.TodoItems.Where(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            if (todoItems is null || todoItems.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(ItemsToDTOs(todoItems!));
         }
 
         // PUT: api/TodoItems/5
@@ -78,8 +91,8 @@ namespace TodoApi.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        [Route("Range")]
+        //[Route("Range")]
+        [HttpPost("Range")]
         public async Task<IActionResult> PostRangeTodoItems(IEnumerable<TodoItemDTO> itemDTOs)
         {
             Console.WriteLine("Range");
@@ -138,6 +151,11 @@ namespace TodoApi.Controllers
            Name = todoItem.Name,
            IsComplete = todoItem.IsComplete
        };
+
+        private static IEnumerable<TodoItemDTO> ItemsToDTOs(IEnumerable<TodoItem> todoItems)
+        {
+            return todoItems.Select(item => ItemToDTO(item));
+        }
 
         private static TodoItem DTOToItem(TodoItemDTO todoItemDto) =>
        new TodoItem
