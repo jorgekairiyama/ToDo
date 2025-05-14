@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -122,6 +123,25 @@ namespace TodoApi.Controllers
                 ItemToDTO(todoItem));
         }
 
+        [HttpPost("Add")]
+        public async Task<ActionResult<TodoItem>> PostTodoItem(int Id, string Name, bool IsComplete)
+        {
+            Console.WriteLine("PostTodoItem");
+            var todoItem = new TodoItem
+            {
+                Id = Id,
+                IsComplete = IsComplete,
+                Name = Name
+            };
+
+            _context.TodoItems.Add(todoItem);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                nameof(GetTodoItem),
+                new { id = todoItem.Id },
+                ItemToDTO(todoItem));
+        }
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
