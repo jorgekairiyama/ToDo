@@ -5,13 +5,14 @@ const ToDoItem = ({
     titulo
 }) =>
 {
+    const [iden, setIden] = useState(0);
     const [nombre, setNombre] = useState("");
     const [completo, setCompleto] = useState(false);
 
     const handleSubmit = (evt) => 
     {
         var toDoDTO = {
-            Id: null,
+            Id: +iden,
             Name: nombre,
             IsComplete: completo
         };
@@ -25,6 +26,13 @@ const ToDoItem = ({
     return (
         <form onSubmit={handleSubmit}>
             <h2>{titulo}</h2>
+            <label htmlFor="iden">Id</label>
+            <input
+                id="iden"
+                type="text"
+                placeholder="Identificador (int)"
+                onChange={(event) => setIden(event.target.value)}
+            />
             <label htmlFor="name">Nombre</label>
             &nbsp;
             <input
