@@ -22,3 +22,5 @@ export const saveToDoItem = (toDoDTO) =>
         //     }
         // }
     );
+
+export const deleteToDoItem = (toDoId) => axios.delete(`${API_ENDPOINT}/${toDoId}`);

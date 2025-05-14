@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ToDoItem = ({
+const AddToDoItemForm = ({
     onSubmit,
     titulo
 }) =>
@@ -11,7 +11,7 @@ const ToDoItem = ({
     const handleSubmit = (evt) => 
     {
         var toDoDTO = {
-            Id: null,
+            Id: 0,
             Name: nombre,
             IsComplete: completo
         };
@@ -47,4 +47,4 @@ const ToDoItem = ({
     )
 }
 
-export default ToDoItem;
+export default AddToDoItemForm;

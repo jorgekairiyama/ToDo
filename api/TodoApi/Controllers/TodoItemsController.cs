@@ -24,7 +24,7 @@ namespace TodoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()
         {
-            Console.WriteLine("GetTodoItems");
+            Console.WriteLine($"GetTodoItems  {System.DateTime.Now}");
 
             return await _context.TodoItems
             .Select(x => ItemToDTO(x))
@@ -35,7 +35,7 @@ namespace TodoApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItemDTO>> GetTodoItem(long id)
         {
-            Console.WriteLine("GetTodoItem");
+            Console.WriteLine($"GetTodoItem {System.DateTime.Now}");
             var todoItem = await _context.TodoItems.FindAsync(id);
 
             if (todoItem == null)
@@ -64,7 +64,7 @@ namespace TodoApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItemDTO todoDTO)
         {
-            Console.WriteLine("PutTodoItem");
+            Console.WriteLine($"PutTodoItem  {System.DateTime.Now}");
             if (id != todoDTO.Id)
             {
                 return BadRequest();
@@ -95,7 +95,7 @@ namespace TodoApi.Controllers
         [HttpPost("Range")]
         public async Task<IActionResult> PostRangeTodoItems(IEnumerable<TodoItemDTO> itemDTOs)
         {
-            Console.WriteLine("Range");
+            Console.WriteLine($"Range  {System.DateTime.Now}");
             await _context.TodoItems.AddRangeAsync(itemDTOs.Select(x => DTOToItem(x)));
             await _context.SaveChangesAsync();
             return NoContent();
@@ -106,7 +106,7 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItemDTO todoDTO)
         {
-            Console.WriteLine("PostTodoItem");
+            Console.WriteLine($"PostTodoItem {System.DateTime.Now}");
             var todoItem = new TodoItem
             {
                 IsComplete = todoDTO.IsComplete,
@@ -126,7 +126,7 @@ namespace TodoApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
-            Console.WriteLine("DeleteTodoItem");
+            Console.WriteLine($"DeleteTodoItem {System.DateTime.Now}");
             var todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
             {
