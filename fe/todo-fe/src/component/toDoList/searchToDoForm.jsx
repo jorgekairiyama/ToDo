@@ -8,8 +8,9 @@ const SearchToDoForm = function ({
     // onSearchInput,
     //onSearchSubmit,
     toDos,
-    dispatchToDos
+    dispatchToDos,
     //handleRemoveStory,
+    setToDoDTOState
 })
 {
     const handleSearchInput = (event) => setSearchTerm(event.target.value);
@@ -57,6 +58,15 @@ const SearchToDoForm = function ({
         });
     }
 
+    const handleOnEditItem = (item) =>
+    {
+        const itmDto = {
+            Id: item.id,
+            Name: item.name,
+            IsComplete: item.isComplete
+        };
+        setToDoDTOState(itmDto);
+    };
 
     return (<>
         <SearchForm
@@ -71,7 +81,7 @@ const SearchToDoForm = function ({
         {toDos.isLoading ? (
             <p>Loading ...</p>
         ) : (
-            <List list={toDos.data} onRemoveItem={handleRemoveToDo} />
+            <List list={toDos.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditItem} />
         )}
     </>)
 };
