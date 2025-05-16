@@ -4,7 +4,7 @@ import AddToDoItemForm from './component/addToDoItemForm';
 import SearchToDoForm from './component/toDoList/searchToDoForm';
 import { useStorageState } from './utils';
 import { initialStateToDo, toDoReducer } from './store/toDoReducer';
-import { Routes, Route, Link } from "react-router";
+import { Routes, Route, Link, Outlet } from "react-router";
 
 
 function App()
@@ -25,32 +25,35 @@ function App()
       <Navigation />
 
       <Routes>
-        <Route
-          path="search"
-          element={
-            <SearchToDoForm
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              toDos={toDos}
-              dispatchToDos={dispatchToDos}
-              setToDoDTOState={setToDoDTOState}
-            />}
-        />
+        <Route element={<Layout />}>
+          <Route
+            index
+            element={
+              <SearchToDoForm
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                toDos={toDos}
+                dispatchToDos={dispatchToDos}
+                setToDoDTOState={setToDoDTOState}
+              />}
+          />
 
-        <Route
-          path="add"
-          element={
-            <AddToDoItemForm
-              toDoDTOState={toDoDTOState}
-              setToDoDTOState={setToDoDTOState}
-              dispatchToDos={dispatchToDos}
-            />
-          }
-        />
+          <Route
+            path="add"
+            element={
+              <AddToDoItemForm
+                toDoDTOState={toDoDTOState}
+                setToDoDTOState={setToDoDTOState}
+                dispatchToDos={dispatchToDos}
+              />
+            }
+          />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
       </Routes>
 
 
-    </div>
+    </div >
   );
 }
 
@@ -63,13 +66,24 @@ const Navigation = () =>
         paddingBottom: "1rem",
       }}
     >
-      <Link to="/search">List</Link>
+      <Link to="/">List</Link>
       &nbsp;
       <Link to="/add">Add</Link>
     </nav>
   );
 };
 
+const Layout = () =>
+{
+  return (
+    <main style={{ padding: '3rem 0' }}>
+      <Outlet />
+    </main>
+  );
+};
 
-
+const NoMatch = () =>
+{
+  return (<p>There's nothing here: 404!</p>);
+};
 export default App;
