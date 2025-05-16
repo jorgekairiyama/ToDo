@@ -1,6 +1,7 @@
 import SearchForm from '../searchForm';
 import List from './list';
 import { fetchListByName, deleteToDoItem } from '../../externalAPI/externalAPI';
+import { useNavigate } from 'react-router';
 
 const SearchToDoForm = function ({
     searchTerm,
@@ -13,6 +14,8 @@ const SearchToDoForm = function ({
     setToDoDTOState
 })
 {
+    const navigate = useNavigate();
+
     const handleSearchInput = (event) => setSearchTerm(event.target.value);
 
     const handleFetchStories = function (event) 
@@ -60,12 +63,14 @@ const SearchToDoForm = function ({
 
     const handleOnEditItem = (item) =>
     {
+
         const itmDto = {
             Id: item.id,
             Name: item.name,
             IsComplete: item.isComplete
         };
         setToDoDTOState(itmDto);
+        navigate("../add");
     };
 
     return (<>

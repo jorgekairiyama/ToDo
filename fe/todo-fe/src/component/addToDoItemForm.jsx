@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { saveToDoItem } from '../externalAPI/externalAPI';
+import { saveNewToDoItem, updateToDoItem } from '../externalAPI/externalAPI';
 
 const AddToDoItemForm = ({
     toDoDTOState,
@@ -18,7 +17,10 @@ const AddToDoItemForm = ({
             IsComplete: toDoDTOState.IsComplete
         };
 
-        handleNewToDoItem(evt, toDoDTO);
+        if (toDoDTOState.Id === 0)
+            handleNewToDoItem(evt, toDoDTO);
+        else
+            handleUpdateToDoItem(evt, toDoDTO);
         // evt.preventDefault();
         console.log("Saving in handleSubmit");
     };
@@ -30,20 +32,47 @@ const AddToDoItemForm = ({
 
         dispatchToDos({ type: 'TODO_POST_INIT' });
 
-        saveToDoItem(toDoDTO)
+        saveNewToDoItem(toDoDTO)
             .then((result) =>
             {
-                console.log("Saving in handleNewToDoItem");
+                console.log(`Saving in handleNewToDoItem ${result}`);
                 dispatchToDos({
                     type: 'TODO_POST_SUCCESS',
                     payload: result.data,
                 });
-                console.log(`Saving in handleNewToDoItem ${result}`);
             })
             .catch((e) =>
             {
                 console.log(`Saving error: ${e}`);
-                dispatchToDos({ type: 'STORIES_FETCH_FAILURE' });
+                dispatchToDos({ type: 'TODO_POST_FAILURE' });
+
+            }
+            );
+
+        event.preventDefault();
+    }
+
+    const handleUpdateToDoItem = function (event, toDoDTO)
+    {
+        console.log(`entering in handleUpdateToDoItem ${toDoDTO.Name} ${toDoDTO.IsComplete}`);
+        if (!toDoDTO.Name) return;
+
+        dispatchToDos({ type: 'TODO_UPDATE_INIT' });
+
+        updateToDoItem(toDoDTO)
+            .then((result) =>
+            {
+                console.log(`Updating with handleUpdateToDoItem ${result}`);
+                dispatchToDos({
+                    type: 'TODO_UPDATE_SUCCESS',
+                    payload: result.data,
+                });
+
+            })
+            .catch((e) =>
+            {
+                console.log(`Saving error: ${e}`);
+                dispatchToDos({ type: 'TODO_UPDATE_FAILURE' });
 
             }
             );

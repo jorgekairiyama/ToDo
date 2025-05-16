@@ -14,24 +14,12 @@ const toDoReducer = (state, action) =>
     console.log(`toDoReducer ${action.type}`);
     switch (action.type)
     {
-        case 'STORIES_FETCH_INIT', 'TODO_DELETE_INIT', 'TODO_POST_INIT':
+        case 'STORIES_FETCH_INIT', 'TODO_DELETE_INIT', 'TODO_POST_INIT', 'TODO_UPDATE_INIT':
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
             };
-        // case 'TODO_DELETE_INIT':
-        //     return {
-        //         ...state,
-        //         isLoading: true,
-        //         isError: false,
-        //     };
-        // case 'TODO_POST_INIT':
-        //     return {
-        //         ...state,
-        //         isLoading: true,
-        //         isError: false,
-        //     };
         case 'STORIES_FETCH_SUCCESS':
             return {
                 ...state,
@@ -46,7 +34,12 @@ const toDoReducer = (state, action) =>
                 isError: false,
                 data: [...state.data, action.payload],
             };
-
+        case 'TODO_UPDATE_SUCCESS':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+            };
         case 'TODO_DELETE_SUCCESS':
             return {
                 ...state,
@@ -54,7 +47,7 @@ const toDoReducer = (state, action) =>
                 isError: false,
                 //data: action.payload,
             };
-        case 'STORIES_FETCH_FAILURE', 'TODO_DELETE_FAILURE':
+        case 'STORIES_FETCH_FAILURE', 'TODO_DELETE_FAILURE', 'TODO_POST_FAILURE', 'TODO_UPDATE_FAILURE':
             return {
                 ...state,
                 isLoading: false,

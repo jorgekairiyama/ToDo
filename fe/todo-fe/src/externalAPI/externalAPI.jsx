@@ -13,7 +13,7 @@ export const fetchListByName = (name) => axios.get(`${API_ENDPOINT}/filter/${nam
 
 //export { fetchList };
 
-export const saveToDoItem = (toDoDTO) =>
+export const saveNewToDoItem = (toDoDTO) =>
     axios.post(API_ENDPOINT,
         toDoDTO
         // , {
@@ -24,3 +24,5 @@ export const saveToDoItem = (toDoDTO) =>
     );
 
 export const deleteToDoItem = (toDoId) => axios.delete(`${API_ENDPOINT}/${toDoId}`);
+
+export const updateToDoItem = (toDoId) => axios.put(`${API_ENDPOINT}/${toDoId.Id}`, toDoId);

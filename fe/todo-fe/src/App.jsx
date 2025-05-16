@@ -16,7 +16,7 @@ function App()
     Id: 0,
     Name: "",
     IsComplete: false
-  })
+  });
 
   return (
     <div>
@@ -68,7 +68,7 @@ const Navigation = () =>
     >
       <Link to="/">List</Link>
       &nbsp;
-      <Link to="/add">Add</Link>
+      <Link to="/add" onClick={handleClickNewToDo}>Add</Link>
     </nav>
   );
 };
@@ -87,3 +87,13 @@ const NoMatch = () =>
   return (<p>There's nothing here: 404!</p>);
 };
 export default App;
+
+const handleClickNewToDo = () =>
+{
+  setToDoDTOState(
+    {
+      Id: 0,
+      Name: "",
+      IsComplete: false
+    });
+}
