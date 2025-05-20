@@ -4,21 +4,25 @@ const SearchForm = ({
     searchTerm,
     onSearchInput,
     onSearchSubmit,
-}) => (
-    <form onSubmit={onSearchSubmit}>
-        <h2>Search</h2>
-        <InputWithLabel
-            id="search"
-            value={searchTerm}
-            isFocused
-            onInputChange={onSearchInput}
-        >
-            <strong>Search:</strong>
-        </InputWithLabel>
-        <button type="submit" disabled={!searchTerm}>
-            Submit
-        </button>
-    </form>
-)
+}) =>
+{
+
+    return (
+        <form onSubmit={onSearchSubmit}>
+            <h2>Search</h2>
+            <InputWithLabel
+                id="search"
+                value={searchTerm}
+                isFocused
+                onInputChange={onSearchInput}
+            >
+                <strong>Search:</strong>
+            </InputWithLabel>
+            <button type="submit" disabled={!searchTerm}>
+                Submit
+            </button>
+        </form>
+    );
+};
 
 export default SearchForm;

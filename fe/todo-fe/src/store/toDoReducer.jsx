@@ -45,7 +45,9 @@ const toDoReducer = (state, action) =>
                 ...state,
                 isLoading: false,
                 isError: false,
-                //data: action.payload,
+                data: state.data.filter(
+                    (toDo) => action.payload.id !== toDo.id
+                ),
             };
         case 'STORIES_FETCH_FAILURE', 'TODO_DELETE_FAILURE', 'TODO_POST_FAILURE', 'TODO_UPDATE_FAILURE':
             return {
@@ -53,13 +55,7 @@ const toDoReducer = (state, action) =>
                 isLoading: false,
                 isError: true,
             };
-        case 'REMOVE_TODO':
-            return {
-                ...state,
-                data: state.data.filter(
-                    (story) => action.payload.id !== story.id
-                ),
-            }
+
         default:
             //throw new Error("reducer case not found");
             return state;

@@ -1,64 +1,54 @@
 import SearchForm from '../searchForm';
 import List from './list';
-import { fetchListByName, deleteToDoItem } from '../../externalAPI/externalAPI';
+//import { fetchListByName, deleteToDoItem } from '../../externalAPI/externalAPI';
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router';
+import { fetchByNameAsync } from '../../store_rtk/toDoSlice';
 
 const SearchToDoForm = function ({
     searchTerm,
     setSearchTerm,
-    // onSearchInput,
-    //onSearchSubmit,
-    toDos,
-    dispatchToDos,
-    //handleRemoveStory,
     setToDoDTOState
 })
 {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+
+    const toDoSliceState = useSelector((state) => state.toDo);
 
     const handleSearchInput = (event) => setSearchTerm(event.target.value);
 
     const handleFetchStories = function (event) 
     {
-        console.log(`useCallback ${searchTerm}`);
+        console.log(`handleFetchStories ${searchTerm}`);
         if (!searchTerm) return;
-        dispatchToDos({ type: 'STORIES_FETCH_INIT' });
-        fetchListByName(searchTerm)
-            .then((result) =>
-            {
-                dispatchToDos({
-                    type: 'STORIES_FETCH_SUCCESS',
-                    payload: result.data,
-                });
-            })
-            .catch(() =>
-                dispatchToDos({ type: 'STORIES_FETCH_FAILURE', payload: "Something went wrong" })
-            );
-
+        dispatch(fetchByNameAsync(searchTerm));
         event.preventDefault();
     };
     const handleRemoveToDo = (item) =>
     {
-        //
-        dispatchToDos({ type: 'TODO_DELETE_INIT' });
-        deleteToDoItem(item.id)
-            .then((result) =>
-            {
-                dispatchToDos({
-                    type: 'TODO_DELETE_SUCCESS'
-                });
-            })
-            .catch(() =>
-                dispatchToDos({
-                    type: 'TODO_DELETE_FAILURE',
-                    payload: "Error deleting",
-                })
-            );
+        console.log(`handleRemoveToDo ${item}`);
+        // //
+        // dispatchToDos({ type: 'TODO_DELETE_INIT' });
+        // deleteToDoItem(item.id)
+        //     .then((result) =>
+        //     {
+        //         dispatchToDos({
+        //             type: 'TODO_DELETE_SUCCESS',
+        //             payload: item.id,
+        //         });
+        //     })
+        //     .catch(() =>
+        //         dispatchToDos({
+        //             type: 'TODO_DELETE_FAILURE',
+        //             payload: "Error deleting",
+        //         })
+        //     );
 
-        dispatchToDos({
-            type: 'REMOVE_TODO',
-            payload: item,
-        });
+        // dispatchToDos({
+        //     type: 'REMOVE_TODO',
+        //     payload: item.id,
+        // });
     }
 
     const handleOnEditItem = (item) =>
@@ -81,13 +71,23 @@ const SearchToDoForm = function ({
         />
 
         <hr />
-        {toDos.isError && <p>{toDos.error_msg} ...</p>}
+        {/* {toDos.isError && <p>{toDos.error_msg} ...</p>}
         {console.log(`Main ${toDos.data}`)}
         {toDos.isLoading ? (
             <p>Loading ...</p>
         ) : (
             <List list={toDos.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditItem} />
+        )} */}
+
+        {/* 
+        {toDoSliceState.isError && <p>{toDoSliceState.error_msg} ...</p>}
+        {console.log(`Main ${toDoSliceState.data}`)}
+        {toDoSliceState.isLoading ? (
+            <p>Loading ...</p>
+        ) : (
+            <List list={toDoSliceState.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditItem} />
         )}
+         */}
     </>)
 };
 

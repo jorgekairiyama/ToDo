@@ -3,7 +3,7 @@ import './App.css'
 import AddToDoItemForm from './component/addToDoItemForm';
 import SearchToDoForm from './component/toDoList/searchToDoForm';
 import { useStorageState } from './utils';
-import { initialStateToDo, toDoReducer } from './store/toDoReducer';
+//import { initialStateToDo, toDoReducer } from './store/toDoReducer';
 import { Routes, Route, Link, Outlet } from "react-router";
 
 
@@ -11,7 +11,7 @@ function App()
 {
 
   const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
-  const [toDos, dispatchToDos] = React.useReducer(toDoReducer, initialStateToDo);
+  //const [toDos, dispatchToDos] = React.useReducer(toDoReducer, initialStateToDo);
   const [toDoDTOState, setToDoDTOState] = React.useState({
     Id: 0,
     Name: "",
@@ -32,13 +32,11 @@ function App()
               <SearchToDoForm
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
-                toDos={toDos}
-                dispatchToDos={dispatchToDos}
                 setToDoDTOState={setToDoDTOState}
               />}
           />
 
-          <Route
+          {/* <Route
             path="add"
             element={
               <AddToDoItemForm
@@ -47,7 +45,7 @@ function App()
                 dispatchToDos={dispatchToDos}
               />
             }
-          />
+          /> */}
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
