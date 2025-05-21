@@ -3,7 +3,7 @@ import List from './list';
 //import { fetchListByName, deleteToDoItem } from '../../externalAPI/externalAPI';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router';
-import { fetchByNameAsync } from '../../store_rtk/toDoSlice';
+import { fetchByNameAsync, deleteToDoAsync } from '../../store_rtk/toDoSlice';
 
 const SearchToDoForm = function ({
     searchTerm,
@@ -28,6 +28,7 @@ const SearchToDoForm = function ({
     const handleRemoveToDo = (item) =>
     {
         console.log(`handleRemoveToDo ${item}`);
+        dispatch(fetchByNameAsync(searchTerm));
         // //
         // dispatchToDos({ type: 'TODO_DELETE_INIT' });
         // deleteToDoItem(item.id)

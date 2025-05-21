@@ -28,6 +28,22 @@ export const fetchByNameAsync = createAsyncThunk(
     }
 )
 
+export const deleteToDoAsync = createAsyncThunk(
+    'toDo/delete',
+    async (id, { rejectWithValue }) =>
+    {
+        if (!id) return;
+        try
+        {
+            const response = await deleteToDoItem(id)
+            return response.data
+        } catch (err)
+        {
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+
 const toDoSlice = createSlice({
     name: "toDo",
     initialState: INITIAL_STATE_ToDo,
@@ -87,6 +103,24 @@ const toDoSlice = createSlice({
                 state.isError = true;
                 state.error_msg = action.payload;
                 state.data = [];
+            })
+            // -------------------------------------------
+            .addCase(deleteToDoAsync.pending, (state) =>
+            {
+                state.isLoading = true;
+                state.isError = false;
+            })
+            .addCase(deleteToDoAsync.fulfilled, (state, action) =>
+            {
+                state.isLoading = false;
+                state.isError = false;
+                state.data = state.data.filter(item => item.id !== action.payload);
+            })
+            .addCase(deleteToDoAsync.rejected, (state, action) =>
+            {
+                state.isLoading = false;
+                state.isError = true;
+                state.error_msg = action.payload;
             })
     },
 });
