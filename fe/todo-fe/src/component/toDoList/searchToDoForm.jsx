@@ -14,7 +14,7 @@ const SearchToDoForm = function ({
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
-    const toDoSliceState = useSelector((state) => state.toDo);
+    const toDoSliceState = useSelector((state) => state.toDos);
 
     const handleSearchInput = (event) => setSearchTerm(event.target.value);
 
@@ -79,15 +79,14 @@ const SearchToDoForm = function ({
             <List list={toDos.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditItem} />
         )} */}
 
-        {/* 
-        {toDoSliceState.isError && <p>{toDoSliceState.error_msg} ...</p>}
-        {console.log(`Main ${toDoSliceState.data}`)}
-        {toDoSliceState.isLoading ? (
-            <p>Loading ...</p>
-        ) : (
+
+        {toDoSliceState.isError && <p>{toDoSliceState.error_msg.title} ...</p>}
+        {console.log(`SearchToDoForm ${toDoSliceState.data}`)}
+        {toDoSliceState.isLoading && <p>Loading ...</p>}
+        {toDoSliceState.data.length &&
             <List list={toDoSliceState.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditItem} />
-        )}
-         */}
+        }
+
     </>)
 };
 

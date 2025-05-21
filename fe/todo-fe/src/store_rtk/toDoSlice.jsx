@@ -86,6 +86,7 @@ const toDoSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.error_msg = action.payload;
+                state.data = [];
             })
     },
 });
