@@ -1,16 +1,17 @@
-import { saveNewToDoItem, updateToDoItem } from '../externalAPI/externalAPI';
+import { addToDoAsync, updateToDoAsync } from '../store_rtk/toDoSlice';
+import { useDispatch } from 'react-redux'
 
 const AddToDoItemForm = ({
     toDoDTOState,
-    setToDoDTOState,
-    dispatchToDos
+    setToDoDTOState
 }) =>
 {
-    //     const [nombre, setNombre] = useState("");
-    //     const [completo, setCompleto] = useState(false);
+    const dispatch = useDispatch();
 
     const handleSubmit = (evt) => 
     {
+        evt.preventDefault();
+
         var toDoDTO = {
             Id: toDoDTOState.Id,
             Name: toDoDTOState.Name,
@@ -18,67 +19,32 @@ const AddToDoItemForm = ({
         };
 
         if (toDoDTOState.Id === 0)
-            handleNewToDoItem(evt, toDoDTO);
+            handleNewToDoItem(toDoDTO);
         else
-            handleUpdateToDoItem(evt, toDoDTO);
+            handleUpdateToDoItem(toDoDTO);
         // evt.preventDefault();
         console.log("Saving in handleSubmit");
+
     };
 
-    const handleNewToDoItem = function (event, toDoDTO)
+    const handleNewToDoItem = function (toDoDTO)
     {
         console.log(`entering in handleNewToDoItem ${toDoDTO.Name} ${toDoDTO.IsComplete}`);
         if (!toDoDTO.Name) return;
 
-        dispatchToDos({ type: 'TODO_POST_INIT' });
+        dispatch(addToDoAsync(toDoDTO));
 
-        saveNewToDoItem(toDoDTO)
-            .then((result) =>
-            {
-                console.log(`Saving in handleNewToDoItem ${result}`);
-                dispatchToDos({
-                    type: 'TODO_POST_SUCCESS',
-                    payload: result.data,
-                });
-            })
-            .catch((e) =>
-            {
-                console.log(`Saving error: ${e}`);
-                dispatchToDos({ type: 'TODO_POST_FAILURE' });
-
-            }
-            );
-
-        event.preventDefault();
     }
 
-    const handleUpdateToDoItem = function (event, toDoDTO)
+    const handleUpdateToDoItem = function (toDoDTO)
     {
         console.log(`entering in handleUpdateToDoItem ${toDoDTO.Name} ${toDoDTO.IsComplete}`);
         if (!toDoDTO.Name) return;
 
-        dispatchToDos({ type: 'TODO_UPDATE_INIT' });
+        dispatch(updateToDoAsync(toDoDTO));
 
-        updateToDoItem(toDoDTO)
-            .then((result) =>
-            {
-                console.log(`Updating with handleUpdateToDoItem ${result}`);
-                dispatchToDos({
-                    type: 'TODO_UPDATE_SUCCESS',
-                    payload: result.data,
-                });
-
-            })
-            .catch((e) =>
-            {
-                console.log(`Saving error: ${e}`);
-                dispatchToDos({ type: 'TODO_UPDATE_FAILURE' });
-
-            }
-            );
-
-        event.preventDefault();
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <h2>Add new ToDo</h2>

@@ -12,7 +12,7 @@ const SearchToDoForm = function ({
 })
 {
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const toDoSliceState = useSelector((state) => state.toDos);
 
@@ -28,31 +28,10 @@ const SearchToDoForm = function ({
     const handleRemoveToDo = (item) =>
     {
         console.log(`handleRemoveToDo ${item}`);
-        dispatch(fetchByNameAsync(searchTerm));
-        // //
-        // dispatchToDos({ type: 'TODO_DELETE_INIT' });
-        // deleteToDoItem(item.id)
-        //     .then((result) =>
-        //     {
-        //         dispatchToDos({
-        //             type: 'TODO_DELETE_SUCCESS',
-        //             payload: item.id,
-        //         });
-        //     })
-        //     .catch(() =>
-        //         dispatchToDos({
-        //             type: 'TODO_DELETE_FAILURE',
-        //             payload: "Error deleting",
-        //         })
-        //     );
-
-        // dispatchToDos({
-        //     type: 'REMOVE_TODO',
-        //     payload: item.id,
-        // });
+        dispatch(deleteToDoAsync(item.id));
     }
 
-    const handleOnEditItem = (item) =>
+    const handleOnEditToDo = (item) =>
     {
 
         const itmDto = {
@@ -72,20 +51,12 @@ const SearchToDoForm = function ({
         />
 
         <hr />
-        {/* {toDos.isError && <p>{toDos.error_msg} ...</p>}
-        {console.log(`Main ${toDos.data}`)}
-        {toDos.isLoading ? (
-            <p>Loading ...</p>
-        ) : (
-            <List list={toDos.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditItem} />
-        )} */}
-
 
         {toDoSliceState.isError && <p>{toDoSliceState.error_msg.title} ...</p>}
         {console.log(`SearchToDoForm ${toDoSliceState.data}`)}
         {toDoSliceState.isLoading && <p>Loading ...</p>}
         {toDoSliceState.data.length &&
-            <List list={toDoSliceState.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditItem} />
+            <List list={toDoSliceState.data} onRemoveItem={handleRemoveToDo} onEditItem={handleOnEditToDo} />
         }
 
     </>)

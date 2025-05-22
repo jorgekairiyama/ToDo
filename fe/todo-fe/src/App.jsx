@@ -36,16 +36,15 @@ function App()
               />}
           />
 
-          {/* <Route
+          <Route
             path="add"
             element={
               <AddToDoItemForm
                 toDoDTOState={toDoDTOState}
                 setToDoDTOState={setToDoDTOState}
-                dispatchToDos={dispatchToDos}
               />
             }
-          /> */}
+          />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
